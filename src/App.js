@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react' 
+import React,{useState } from 'react' 
 import { IoLocationSharp } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 import { FaWater } from "react-icons/fa6";
@@ -50,15 +50,12 @@ function App() {
   const [country, setCountry] = useState("Tiruppur");
   const [weather, setWeather] = useState(false)
   const [isNotFound, setNotFound] = useState(false);
+  const [isFirstRun, setFirst] = useState(true);
 
   const api = {
     base:"https://api.openweathermap.org/data/2.5/",
     key:"c84854eca53151292dd4ac9566f61e58"
   }
-
-  useEffect(()=>{
-    getWeather()
-  },[])
   
   const getWeather= async() => {
     try{
@@ -79,6 +76,11 @@ function App() {
       console.log('error');
       setNotFound(true)
     }  
+  }
+  
+  if (isFirstRun){
+    setFirst(false)
+    getWeather() 
   }
 
   const weatherDetailsPage=()=>(
@@ -111,7 +113,7 @@ function App() {
 
   const notFoundPage = () => (
     <div className='notFound-container'>
-       <img src="https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg" className='error-image'/>
+       <img src="https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg" alt="" className='error-image'/>
     </div>
   )
   
